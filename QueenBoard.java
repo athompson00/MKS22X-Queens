@@ -82,7 +82,22 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
 
   */
-  public boolean solve(){}
+  public boolean solve(){
+
+  }
+
+  public boolean solveHelper(int r, int c){
+    if (board[r][c] == 0){
+      addQueen(r,c);
+      return solveHelper(r + 1, c);
+    }
+    if (board[r][c] == -1 || board[r][c] > 0 && r != board.length){
+      return solveHelper(r, c + 1);
+    }
+    if (r == board.length && board[r][c] == -1 || board[r][c] > 0){
+      return solveHelper(r + 1, c);
+    }
+  }
 
   /**
   *@return the number of solutions found, and leaves the board filled with only 0's
