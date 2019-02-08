@@ -4,6 +4,9 @@ public class QueenBoard{
     board = new int[size][size];
   }
   private boolean addQueen(int r, int c){
+    if (board[r][c] > 0){
+      return false;
+    }
     board[r][c] = -1;
     for (int i = 0; i < board.length; i++){
       board[i][c] += 1;
@@ -11,7 +14,14 @@ public class QueenBoard{
     for (int i = 0; i < board[0].length;i++){
       board[r][i] += 1;
     }
-    
+    for (int i = 0; i < board.length; i++){
+      for (int a = 0; a < board[0].length; a++){
+        if (Math.abs(r - i) == Math.abs(c - a){
+          board[i][a] += 1;
+        }
+      }
+    }
+    return true;
   }
   private boolean removeQueen(int r, int c){}
   /**
@@ -28,7 +38,14 @@ public class QueenBoard{
   *(pythonic string notation for clarity,
   *excludes the character up to the *)
   */
-  public String toString(){}
+  public String toString(){
+    String result = "";
+    for (int i = 0; i < board.length; i++){
+      for (int c = 0; c < board.length; c++){
+        if (board[i][])
+      }
+    }
+  }
 
 
 
