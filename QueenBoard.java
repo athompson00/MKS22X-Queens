@@ -23,7 +23,26 @@ public class QueenBoard{
     }
     return true;
   }
-  private boolean removeQueen(int r, int c){}
+  private boolean removeQueen(int r, int c){
+    if (board[r][c] != -1){
+      return false;
+    }
+    board[r][c] = 0;
+    for (int i = 0; i < board.length; i++){
+      board[i][c] -= 1;
+    }
+    for (int i = 0; i < board[0].length;i++){
+      board[r][i] -= 1;
+    }
+    for (int i = 0; i < board.length; i++){
+      for (int a = 0; a < board[0].length; a++){
+        if (Math.abs(r - i) == Math.abs(c - a){
+          board[i][a] -= 1;
+        }
+      }
+    }
+    return true;
+  }
   /**
   *@return The output string formatted as follows:
   *All numbers that represent queens are replaced with 'Q'
@@ -42,8 +61,14 @@ public class QueenBoard{
     String result = "";
     for (int i = 0; i < board.length; i++){
       for (int c = 0; c < board.length; c++){
-        if (board[i][])
+        if (board[i][c] == -1){
+          result += "Q";
+        }
+        if (board[i][c] >= 0){
+          result += "_";
+        }
       }
+      result += "\n";
     }
   }
 
