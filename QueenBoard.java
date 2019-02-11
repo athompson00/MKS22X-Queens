@@ -86,17 +86,19 @@ public class QueenBoard{
 
   }
 
-  public boolean solveHelper(int r, int c){
-    if (board[r][c] == 0){
-      addQueen(r,c);
-      return solveHelper(r + 1, c);
+  public boolean solveHelper(int c){
+    if (c == board.length){
+      return true;
     }
-    if (board[r][c] == -1 || board[r][c] > 0 && r != board.length){
-      return solveHelper(r, c + 1);
+    for (int r == 0; r < board.length; r++){
+      if (addQueen(r, c)){
+        if (solveHelper(c + 1)){
+          return true;
+        }
+        removeQueen(r, c);
+      }
     }
-    if (r == board.length && board[r][c] == -1 || board[r][c] > 0){
-      return solveHelper(r + 1, c);
-    }
+    return false;
   }
 
   /**
