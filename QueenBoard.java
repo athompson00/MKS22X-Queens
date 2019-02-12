@@ -1,26 +1,29 @@
 public class QueenBoard{
   private int[][] board;
+  private int Qs = 0;
   public QueenBoard(int size){
     board = new int[size][size];
   }
-  private boolean addQueen(int r, int c){
+  public boolean addQueen(int r, int c){
     if (board[r][c] > 0){
       return false;
     }
-    board[r][c] = -1;
-    for (int i = 0; i < board.length; i++){
-      board[i][c] += 1;
+    for (int y = 0; y < board.length; y++){
+      board[y][c] += 1;
     }
-    for (int i = 0; i < board[0].length;i++){
-      board[r][i] += 1;
-    }
-    for (int i = 0; i < board.length; i++){
-      for (int a = 0; a < board[0].length; a++){
-        if (Math.abs(r - i) == Math.abs(c - a){
-          board[i][a] += 1;
-        }
+    int a = 0;
+    for (int x = 0; x < board.length; x++){
+      board[r][x] = board[r][x] + 1;
+      if (r - a >= 0){
+        board[r-a][x] += 1;
       }
+      if (r + a < board.length){
+        board[r + a][x] += 1;
+      }
+      a += 1;
     }
+    board[r][c] = -1;
+    Qs += 1;
     return true;
   }
   private boolean removeQueen(int r, int c){
@@ -36,7 +39,7 @@ public class QueenBoard{
     }
     for (int i = 0; i < board.length; i++){
       for (int a = 0; a < board[0].length; a++){
-        if (Math.abs(r - i) == Math.abs(c - a){
+        if (Math.abs(r - i) == Math.abs(c - a)){
           board[i][a] -= 1;
         }
       }
@@ -70,6 +73,7 @@ public class QueenBoard{
       }
       result += "\n";
     }
+    return result;
   }
 
 
@@ -83,27 +87,34 @@ public class QueenBoard{
 
   */
   public boolean solve(){
-
+    return solveHelper(0, 0, 0, 0, 0);
   }
 
-  public boolean solveHelper(int r, int c){
+  public boolean solveHelper(int r, int c, int Qr, int Qc, int numQueens){
+    if (r == board.length && c == board.length && numQueens == board.length){
+      return true;
+    }
     if (board[r][c] == 0){
       addQueen(r,c);
-      return solveHelper(r + 1, c);
+      return solveHelper(r + 1, c, r, c, numQueens + 1);
     }
     if (board[r][c] == -1 || board[r][c] > 0 && r != board.length){
-      return solveHelper(r, c + 1);
+      return solveHelper(r, c + 1, Qr, Qc, numQueens);
     }
-    if (r == board.length && board[r][c] == -1 || board[r][c] > 0){
-      return solveHelper(r + 1, c);
+    /*
+    if (r == board.length && board[r][c] > 0){
+      removeQueen(Qr,Qc);
+      return solveHelper(Qr, Qc + 1, );
     }
+    */
+    return false;
   }
 
   /**
   *@return the number of solutions found, and leaves the board filled with only 0's
   *@throws IllegalStateException when the board starts with any non-zero value
   */
-  public int countSolutions(){}
-
-
+  public int countSolutions(){
+    return 1;
+  }
 }
