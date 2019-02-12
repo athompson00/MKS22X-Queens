@@ -12,7 +12,7 @@ public class QueenBoard{
       board[y][c] += 1;
     }
     int a = 0;
-    for (int x = 0; x < board.length; x++){
+    for (int x = c; x < board.length; x++){
       board[r][x] = board[r][x] + 1;
       if (r - a >= 0){
         board[r-a][x] += 1;
@@ -30,19 +30,18 @@ public class QueenBoard{
     if (board[r][c] != -1){
       return false;
     }
+    Qs -= 1;
+    int a = 0;
     board[r][c] = 0;
-    for (int i = 0; i < board.length; i++){
-      board[i][c] -= 1;
-    }
-    for (int i = 0; i < board[0].length;i++){
-      board[r][i] -= 1;
-    }
-    for (int i = 0; i < board.length; i++){
-      for (int a = 0; a < board[0].length; a++){
-        if (Math.abs(r - i) == Math.abs(c - a)){
-          board[i][a] -= 1;
-        }
+    for (int b = c; c < board.length; c++){
+      board[r][b] = board[r][b] - 1;
+      if (0 <= r - a){
+        board[r - a][b] -= 1;
       }
+      if (board.length > r + a){
+        board[r + a][b] -= 1;
+      }
+      a += 1;
     }
     return true;
   }
@@ -67,7 +66,10 @@ public class QueenBoard{
         if (board[i][c] == -1){
           result += "Q";
         }
-        if (board[i][c] >= 0){
+        if (board[i][c] > 0){
+          result += "X";
+        }
+        if (board[i][c] == 0){
           result += "_";
         }
       }
@@ -87,33 +89,14 @@ public class QueenBoard{
 
   */
   public boolean solve(){
-    return solveHelper(0, 0, 0, 0, 0);
+    return solveHelper(0);
   }
 
-<<<<<<< HEAD
-  public boolean solveHelper(int r, int c, int Qr, int Qc, int numQueens){
-    if (r == board.length && c == board.length && numQueens == board.length){
-      return true;
-    }
-    if (board[r][c] == 0){
-      addQueen(r,c);
-      return solveHelper(r + 1, c, r, c, numQueens + 1);
-    }
-    if (board[r][c] == -1 || board[r][c] > 0 && r != board.length){
-      return solveHelper(r, c + 1, Qr, Qc, numQueens);
-    }
-    /*
-    if (r == board.length && board[r][c] > 0){
-      removeQueen(Qr,Qc);
-      return solveHelper(Qr, Qc + 1, );
-    }
-    */
-=======
   public boolean solveHelper(int c){
     if (c == board.length){
       return true;
     }
-    for (int r == 0; r < board.length; r++){
+    for (int r = 0; r < board.length; r++){
       if (addQueen(r, c)){
         if (solveHelper(c + 1)){
           return true;
@@ -121,7 +104,6 @@ public class QueenBoard{
         removeQueen(r, c);
       }
     }
->>>>>>> 6e70eb73574bab185de88e6eeb9917a4d040becb
     return false;
   }
 
