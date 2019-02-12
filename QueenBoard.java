@@ -70,13 +70,10 @@ public class QueenBoard{
     for (int i = 0; i < board.length; i++){
       for (int c = 0; c < board.length; c++){
         if (board[i][c] == -1){
-          result += "Q";
+          result += "Q ";
         }
-        if (board[i][c] > 0){
-          result += "X";
-        }
-        if (board[i][c] == 0){
-          result += "_";
+        if (board[i][c] >= 0){
+          result += "_ ";
         }
       }
       result += "\n";
