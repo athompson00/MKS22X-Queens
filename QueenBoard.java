@@ -90,6 +90,7 @@ public class QueenBoard{
     return solveHelper(0, 0, 0, 0, 0);
   }
 
+<<<<<<< HEAD
   public boolean solveHelper(int r, int c, int Qr, int Qc, int numQueens){
     if (r == board.length && c == board.length && numQueens == board.length){
       return true;
@@ -107,6 +108,20 @@ public class QueenBoard{
       return solveHelper(Qr, Qc + 1, );
     }
     */
+=======
+  public boolean solveHelper(int c){
+    if (c == board.length){
+      return true;
+    }
+    for (int r == 0; r < board.length; r++){
+      if (addQueen(r, c)){
+        if (solveHelper(c + 1)){
+          return true;
+        }
+        removeQueen(r, c);
+      }
+    }
+>>>>>>> 6e70eb73574bab185de88e6eeb9917a4d040becb
     return false;
   }
 
