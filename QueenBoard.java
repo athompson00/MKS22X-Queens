@@ -5,15 +5,16 @@ public class QueenBoard{
     board = new int[size][size];
   }
   public boolean addQueen(int r, int c){
-    if (board[r][c] > 0){
+    if (board[r][c] > 0 || board[r][c] == -1){
       return false;
     }
     for (int y = 0; y < board.length; y++){
-      board[y][c] += 1;
+      board[y][c] += 1;//adds to entire row in front of it
     }
     int a = 0;
-    for (int x = c; x < board.length; x++){
+    for (int x = c; x < board.length; x++){//add 1 to each endangered spot in front of it
       board[r][x] = board[r][x] + 1;
+
       if (r - a >= 0){
         board[r-a][x] += 1;
       }
@@ -26,14 +27,18 @@ public class QueenBoard{
     Qs += 1;
     return true;
   }
-  private boolean removeQueen(int r, int c){
+  public boolean removeQueen(int r, int c){
     if (board[r][c] != -1){
       return false;
     }
     Qs -= 1;
     int a = 0;
-    board[r][c] = 0;
-    for (int b = c; c < board.length; c++){
+    for (int i = 0; i < board.length; i++){
+      if (i != r){
+        board[i][c] -= 1;
+      }
+    }
+    for (int b = c; b < board.length; b++){
       board[r][b] = board[r][b] - 1;
       if (0 <= r - a){
         board[r - a][b] -= 1;
@@ -43,6 +48,7 @@ public class QueenBoard{
       }
       a += 1;
     }
+    board[r][c] = 0;
     return true;
   }
   /**
@@ -89,6 +95,13 @@ public class QueenBoard{
 
   */
   public boolean solve(){
+    for (int i = 0; i < board.length; i++){
+      for (int c= 0; c < board.length; c++){
+        if (board[i][c] != 0){
+          throw new IllegalStateException("board still has nonzero values");
+        }
+      }
+    }
     return solveHelper(0);
   }
 
@@ -112,6 +125,28 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions(){
-    return 1;
+    for (int i = 0; i < board.length; i++){
+      for (int c= 0; c < board.length; c++){
+        if (board[i][c] != 0){
+          throw new IllegalStateException("board still has nonzero values");
+        }
+      }
+    }
+    int result = 0;
+    int c = 0;
+    for (int r = 0; r < board.length; r++){
+      if (addQueen(r, c)){
+        if (solveHelper(c + 1)){
+          result++;
+          for (int i = 0; i < board.length; i++){
+            for (int z= 0; z < board.length; z++){
+              board[i][z] = 0;
+            }
+          }
+        }
+        removeQueen(r, c);
+      }
+    }
+    return result;
   }
 }
