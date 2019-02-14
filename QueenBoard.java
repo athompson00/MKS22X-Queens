@@ -129,18 +129,16 @@ public class QueenBoard{
         }
       }
     }
+    return countSolutionsHelper(0, 0);
+  }
+  public int countSolutionsHelper(int c, int q){
     int result = 0;
-    int c = 0;
+    if (c == board.length){
+      return 1;
+    }
     for (int r = 0; r < board.length; r++){
       if (addQueen(r, c)){
-        if (solveHelper(c + 1)){
-          result++;
-          for (int i = 0; i < board.length; i++){
-            for (int z= 0; z < board.length; z++){
-              board[i][z] = 0;
-            }
-          }
-        }
+        result += countSolutionsHelper(c + 1, q + 1);
         removeQueen(r, c);
       }
     }
